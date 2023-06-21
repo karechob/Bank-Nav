@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Debit() {
-  const [debitBalance, setDebitBalance] = useState(null);
+function Debit({ handleDebit }) {
+  const [debitBalance, setDebitBalance] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function Debit() {
       });
   }, []);
 
-  function subtractDebit() {
-    setDebitBalance(prevBalance => prevBalance - withdrawAmount);
+  function subDebit() {
+    handleDebit(withdrawAmount);
     setWithdrawAmount(0);
   }
 
@@ -28,11 +28,16 @@ function Debit() {
   return (
     <div>
       <h1>Debit Amount: {debitBalance}</h1>
-      <p>Withdraw Amount:</p>
+      <p>Add Amount:</p>
       <input type="number" value={withdrawAmount} onChange={handleWithdrawAmountChange} />
-      <button onClick={subtractDebit}>Withdraw</button>
+      <button onClick={subDebit}>Submit</button>
     </div>
   );
 }
 
 export default Debit;
+
+/*
+
+
+*/

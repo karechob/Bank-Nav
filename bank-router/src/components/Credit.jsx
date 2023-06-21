@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Credit() {
-  const [creditBalance, setCreditBalance] = useState(null);
+function Credit({ handleCredit }) {
+  const [creditBalance, setCreditBalance] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function Credit() {
   }, []);
 
   function addCredit() {
-    setCreditBalance(prevBalance => prevBalance + withdrawAmount);
+    handleCredit(withdrawAmount);
     setWithdrawAmount(0);
   }
 
@@ -28,9 +28,9 @@ function Credit() {
   return (
     <div>
       <h1>Credit Amount: {creditBalance}</h1>
-      <p>Withdraw Amount:</p>
+      <p>Add Amount:</p>
       <input type="number" value={withdrawAmount} onChange={handleWithdrawAmountChange} />
-      <button onClick={addCredit}>Withdraw</button>
+      <button onClick={addCredit}>Submit</button>
     </div>
   );
 }
