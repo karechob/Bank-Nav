@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Debit({ handleDebit }) {
+
+function Debit( {handleDebit} ) {
   const [debitBalance, setDebitBalance] = useState(0);
   const [withdrawAmount, setWithdrawAmount] = useState(0);
-
+  console.log(handleDebit)
   useEffect(() => {
     axios
       .get('https://bank-of-react-b745wfs0u-ajlapid718.vercel.app/debits')
@@ -14,7 +15,7 @@ function Debit({ handleDebit }) {
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }, [debitBalance, withdrawAmount]);
 
   function subDebit() {
     handleDebit(withdrawAmount);
