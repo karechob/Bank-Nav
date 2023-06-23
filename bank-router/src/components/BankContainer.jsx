@@ -36,7 +36,7 @@ function BankContainer() {
     fetchData();
   }, []);
 
-  const addDebit = (debitBalance) => {
+  const subDebit = (debitBalance) => {
     setDebitBalance(
       (previousDebit) => Number(previousDebit) + Number(debitBalance.amount)
     );
@@ -92,7 +92,7 @@ function BankContainer() {
             path="/Bank-Nav/debit/*"
             element={
               <Debit
-                addDebit={addDebit}
+                subDebit={subDebit}
                 debitBalance={debitBalance}
                 debitExpenses={debitExpenses}
               />

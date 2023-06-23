@@ -3,12 +3,13 @@ import React, { useState } from "react";
 function Debit(props) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
+  let date = new Date().toLocaleDateString();
 
   function handleForm(event) {
     event.preventDefault();
 
     const debitStatement = { description, amount };
-    props.addDebit(debitStatement);
+    props.subDebit(debitStatement);
 
     setDescription("");
     setAmount("");
@@ -29,7 +30,7 @@ function Debit(props) {
             onChange={(event) => setDescription(event.target.value)}
           />
           <br />
-          <label>Add funds:</label>
+          <label>Retrieve funds:</label>
           <br />
           <input
             placeholder="Add Debit"
@@ -47,6 +48,7 @@ function Debit(props) {
           {props.debitExpenses.map((item, index) => (
             <div key={index} className="debit-item">
               <p>TRANSACTION_ID: {Math.round(Math.random() * 1000000)}</p>
+              <p>Date: {date}</p>
               <p>Description: {item.description}</p>
               <p>Amount: {item.amount}</p>
             </div>
