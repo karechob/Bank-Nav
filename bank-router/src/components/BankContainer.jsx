@@ -64,22 +64,22 @@ function BankContainer() {
               <h1>Balance: {balance}</h1>
             </li>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/Bank-Nav/">Home</Link>
             </li>
             <li>
-              <Link to="/credit">Credit</Link>
+              <Link to="/Bank-Nav/credit">Credit</Link>
             </li>
             <li>
-              <Link to="/debit">Debit</Link>
+              <Link to="/Bank-Nav/debit">Debit</Link>
             </li>
           </ul>
         </nav>
 
         {/* Routes */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/Bank-Nav/" element={<Home />} />
           <Route
-            path="/credit/*"
+            path="/Bank-Nav/credit/*"
             element={
               <Credit
                 addCredit={addCredit}
@@ -89,7 +89,7 @@ function BankContainer() {
             }
           />
           <Route
-            path="/debit/*"
+            path="/Bank-Nav/debit/*"
             element={
               <Debit
                 addDebit={addDebit}
