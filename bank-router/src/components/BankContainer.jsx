@@ -1,12 +1,59 @@
-import react from 'react';
-import Balance from './components/Balance';
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./components/Home";
-import Credit from './components/Credit';
-import Debit from './components/Debit';
-
+import axios from "axios";
+import Home from "./Home";
+import Credit from "./Credit";
+import Debit from "./Debit";
 
 function BankContainer() {
+  const [debitBalance, setDebitBalance] = useState(null);
+  const [creditBalance, setCreditBalance] = useState(null);
+  const [balance, setBalance] = useState(0);
+  const [debitExpenses, setDebitExpenses] = useState([]);
+  const [creditExpenses, setCreditExpenses] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        //retrieves data from /credits
+        const creditData = await axios.get(
+          "https://bank-of-react-b745wfs0u-ajlapid718.vercel.app/credits"
+        );
+        setCreditBalance(creditData.data);
+
+        //retrieves data from /debits
+        const debitData = await axios.get(
+          "https://bank-of-react-b745wfs0u-ajlapid718.vercel.app/debits"
+        );
+        setDebitBalance(debitData.data);
+
+        setBalance(Number(creditData.data - debitData.data));
+      } catch (error) {
+        console.log(error);
+        alert("Could not retrieve information, please try again.");
+      }
+    }
+    fetchData();
+  }, []);
+
+  const addDebit = (debitBalance) => {
+    setDebitBalance(
+      (previousDebit) => Number(previousDebit) + Number(debitBalance.amount)
+    );
+    setBalance((previousBalance) => previousBalance - debitBalance.amount);
+    setDebitExpenses([...debitExpenses, debitBalance]);
+  };
+
+  const addCredit = (creditBalance) => {
+    setCreditBalance(
+      (previousCredit) => Number(previousCredit) + Number(creditBalance.amount)
+    );
+    setBalance(
+      (previousBalance) => previousBalance + Number(creditBalance.amount)
+    );
+    setCreditExpenses([...creditExpenses, creditBalance]);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -14,10 +61,10 @@ function BankContainer() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <h1>Balance: {balance}</h1>
             </li>
             <li>
-              <Balance/>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/credit">Credit</Link>
@@ -31,8 +78,26 @@ function BankContainer() {
         {/* Routes */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/credit/*" element={<Credit />} />
-          <Route path="/debit/*" element={<Debit />} />
+          <Route
+            path="/credit/*"
+            element={
+              <Credit
+                addCredit={addCredit}
+                creditBalance={creditBalance}
+                creditExpenses={creditExpenses}
+              />
+            }
+          />
+          <Route
+            path="/debit/*"
+            element={
+              <Debit
+                addDebit={addDebit}
+                debitBalance={debitBalance}
+                debitExpenses={debitExpenses}
+              />
+            }
+          />
         </Routes>
       </div>
     </Router>
@@ -50,5 +115,7 @@ all state variables
 
 look up async
 
+for deployment
+/Bank-Nav
 
 */

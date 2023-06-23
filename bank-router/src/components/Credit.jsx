@@ -1,47 +1,60 @@
+import React, { useState } from "react";
 
-function Credit({preps}) {
+function Credit(props) {
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  function handleForm(event) {
+    event.preventDefault();
+
+    const creditStatement = { description, amount };
+    props.addCredit(creditStatement);
+
+    setDescription("");
+    setAmount("");
+  }
 
   return (
     <div>
-      <h1>Credit Amount: {preps}</h1>
-      <p>Add Amount:</p>
-      <input type="number" value={preps} onChange={preps} />
-      <button onClick={preps}>Submit</button>
+      <div className="container">
+        <h1 className="heading">CREDIT BALANCE ${props.creditBalance}</h1>
+        <form onSubmit={handleForm} className="form-container">
+          <label>Add description:</label>
+          <br />
+          <input
+            placeholder="Add Description"
+            type="text"
+            className="input-field"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <br />
+          <label>Add funds:</label>
+          <br />
+          <input
+            placeholder="Add Credit"
+            type="number"
+            className="input-field"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+          />
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+
+        <div className="history">
+          <h3>Your credit history:</h3>
+          {props.creditExpenses.map((item, index) => (
+            <div key={index} className="credit-item">
+              <p>TRANSACTION_ID: {Math.round(Math.random() * 1000000)}</p>
+              <p>Description: {item.description}</p>
+              <p>Amount: {item.amount} </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default Credit;
-
-/**
- *          // const [creditBalance, setCreditBalance] = useState(0);
-  // const [withdrawAmount, setWithdrawAmount] = useState(0);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://bank-of-react-b745wfs0u-ajlapid718.vercel.app/credits')
-  //     .then(response => {
-  //       setCreditBalance(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // function addCredit() {
-  //   handleCredit(withdrawAmount);
-  //   setWithdrawAmount(0);
-  // }
-
-  // function handleWithdrawAmountChange(event) {
-  //   setWithdrawAmount(Number(event.target.value));
-  // }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */

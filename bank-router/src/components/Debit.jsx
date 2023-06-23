@@ -1,11 +1,58 @@
-function Debit( {preps} ) {
+import React, { useState } from "react";
+
+function Debit(props) {
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  function handleForm(event) {
+    event.preventDefault();
+
+    const debitStatement = { description, amount };
+    props.addDebit(debitStatement);
+
+    setDescription("");
+    setAmount("");
+  }
 
   return (
     <div>
-      <h1>Debit Amount: {preps}</h1>
-      <p>Add Amount:</p>
-      <input type="number" value={preps} onChange={preps} />
-      <button onClick={preps}>Submit</button>
+      <div className="container">
+        <h1 className="heading">DEBIT BALANCE ${props.debitBalance}</h1>
+        <form onSubmit={handleForm} className="form-container">
+          <label>Add description:</label>
+          <br />
+          <input
+            placeholder="Add Description"
+            type="text"
+            className="input-field"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <br />
+          <label>Add funds:</label>
+          <br />
+          <input
+            placeholder="Add Debit"
+            type="number"
+            className="input-field"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+          />
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+
+        <div className="history">
+          <h3>Your debit history:</h3>
+          {props.debitExpenses.map((item, index) => (
+            <div key={index} className="debit-item">
+              <p>TRANSACTION_ID: {Math.round(Math.random() * 1000000)}</p>
+              <p>Description: {item.description}</p>
+              <p>Amount: {item.amount}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
