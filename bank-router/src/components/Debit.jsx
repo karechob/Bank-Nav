@@ -46,7 +46,7 @@ function Debit(props) {
         <div className="history">
           <h3>Your debit history:</h3>
           {props.debitExpenses.map((item, index) => (
-            <div key={index} className="debit-item">
+            <div key={index} className="history-item">
               <p>TRANSACTION_ID: {Math.round(Math.random() * 1000000)}</p>
               <p>Date: {date}</p>
               <p>Description: {item.description}</p>
@@ -60,31 +60,3 @@ function Debit(props) {
 }
 
 export default Debit;
-
-/*
-import React, { useEffect, useState } from 'react';
-
-  // const [debitBalance, setDebitBalance] = useState(0);
-  // const [withdrawAmount, setWithdrawAmount] = useState(0);
-  // console.log(handleDebit)
-  // useEffect(() => {
-  //   axios
-  //     .get('https://bank-of-react-b745wfs0u-ajlapid718.vercel.app/debits')
-  //     .then(response => {
-  //       setDebitBalance(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, [debitBalance, withdrawAmount]);
-
-  // function subDebit() {
-  //   handleDebit(withdrawAmount);
-  //   setWithdrawAmount(0);
-  // }
-
-  // function handleWithdrawAmountChange(event) {
-  //   setWithdrawAmount(Number(event.target.value));
-  // }
-
-*/

@@ -46,7 +46,7 @@ function Credit(props) {
         <div className="history">
           <h3>Your credit history:</h3>
           {props.creditExpenses.map((item, index) => (
-            <div key={index} className="credit-item">
+            <div key={index} className="history-item">
               <p>TRANSACTION_ID: {Math.round(Math.random() * 1000000)}</p>
               <p>Date: {date}</p>
               <p>Description: {item.description}</p>

@@ -58,10 +58,10 @@ function BankContainer() {
     <Router>
       <div className="App">
         {/* Navigation */}
-        <nav>
+        <nav className="navbar">
           <ul>
             <li>
-              <h1>Balance: {balance}</h1>
+              <h1>Balance: ${balance}</h1>
             </li>
             <li>
               <Link to="/Bank-Nav/">Home</Link>
